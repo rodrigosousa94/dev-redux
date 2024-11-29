@@ -89,7 +89,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - Redux
 - Vite
 - Css Module
-- 
+
 <!-- ---------------------------------------------------------------------- -->
 
 <!-- MODELO DE COMO CONTRIBUIR PARA O PROJETO -->

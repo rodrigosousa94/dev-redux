@@ -1,15 +1,37 @@
 import { useState } from 'react'
 import styles from './address.module.css'
 import { Header } from '../../components/header'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { addAddress, removeAddress } from '../../redux/user/slice';
+
 
 export function Address() {
-  const [addressName, setAddressName] = useState("")
-  const [addressNumber, setAddressNumber] = useState("")
+  const dispatch = useDispatch()
+  const { user } = useSelector((rootreducer) => rootreducer.user)
+  const [addressName, setAddressName] = useState(user?.address?.location ?? "")
+  const [addressNumber, setAddressNumber] = useState(user?.address?.number ?? "")
 
+  const navigate = useNavigate()
 
-  function handleRegisterAddress(){
+  function handleRegisterAddress(e){
+    e.preventDefault()
+    dispatch(addAddress({
+     location: addressName,
+     number: addressNumber
+
+    }))
+    navigate('/painel')
     console.log(addressName, addressNumber)
+  }
+
+  function handleDeleteAddress(e){
+    e.preventDefault()
+    dispatch(removeAddress())
+    setAddressName("")
+    setAddressNumber("")
+    alert("Endereço deletado com sucesso!");
   }
 
   return (
@@ -22,10 +44,12 @@ export function Address() {
             <Link to="/painel">
               Voltar para o painel
             </Link>
+            {user && user?.address && <button className={styles.buttonDelete} onClick={handleDeleteAddress}>Deletar Endereço</button> }
           </div>
 
           <section className={styles.address}>
            <h2>Meu endereço:</h2>
+         
 
           <input 
             type="text" 

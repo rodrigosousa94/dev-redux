@@ -1,16 +1,29 @@
-import styles from './home.module.css'
-import { Header } from '../../components/header'
-import { Link } from 'react-router-dom'
+import styles from "./home.module.css";
+import { Header } from "../../components/header";
+import { Link } from "react-router-dom";
+
+import { useSelector, useDispatch } from "react-redux";
+import { removeAddress, fetchUsers } from "../../redux/user/slice";
 
 export function Home() {
+  const { user, users, loading } = useSelector((rootReducer) => rootReducer.user);
 
-  function handleDeleteAddress(){
-    alert("Endereço deletado com sucesso!")
+  const dispatch = useDispatch()
+
+  function handleDeleteAddress() {
+    dispatch(removeAddress())
+    alert("Endereço deletado com sucesso!");
+
+  }
+
+  function handleFetchUsers(e){
+    e.preventDefault()
+    dispatch(fetchUsers())
   }
 
   return (
     <>
-    <Header/>
+      <Header />
       <div className={styles.container}>
         <nav className={styles.nav}>
           <Link to="/" className={styles.link}>
@@ -27,23 +40,40 @@ export function Home() {
         <main className={styles.content}>
           <div className={styles.message}>
             <h1 className={styles.title}>
-              Olá Visitante, bem vindo!
+              Olá {user ? user.name : "Visitante"}, bem vindo!
             </h1>
 
-            <span>Email: ....</span>
+            <span>{user ? user.email : "Email: ...."}</span>
 
+            {user && user.address && (
+              <>
+                <strong className={styles.addressLabel}>Endereço atual:</strong>
+                <div className={styles.address}>
+                  <p>{user.address.location}, nº {user.address.number}</p>
 
-            <strong className={styles.addressLabel}>Endereço atual:</strong>
-            <div className={styles.address}>
-              <p>Rua centro, n 123</p>
-              
-              <button onClick={handleDeleteAddress}>Deletar endereço</button>
-            </div>
+                  <button onClick={handleDeleteAddress}>
+                    Deletar endereço
+                  </button>
+                </div>
+              </>
+            )}
 
+            <hr />
+            <br />
+            <h2>Lista de Usuarios:</h2>
+            <button onClick={handleFetchUsers}>Buscar usuários</button>
+            <br />
+
+                {loading && <strong>Carregando...</strong>}
+                {!loading && users.map((user) => (
+                  <div key={user.id}>
+                    <p>ID: {user.id} | {user.name}</p>
+                  </div>  
+                ))}
+             
           </div>
-
         </main>
       </div>
     </>
-  )
+  );
 }

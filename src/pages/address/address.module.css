@@ -9,6 +9,14 @@
   margin: 24px 0;
 }
 
+.buttonDelete{
+  margin-left: 16px;
+  background-color: red;
+  padding: 4px;
+  border: 0;
+  border-radius: 4px;
+}
+
 .address{
   background-color: #FFF;
   display: flex;

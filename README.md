@@ -53,6 +53,7 @@ Esse projeto tem sido uma excelente oportunidade para aprender na prática como 
 ### Widget em uma página externa
 
 ![Web1](https://github.com/rodrigosousa94/dev-redux/blob/main/public/tela-login.png)
+![Web2](https://github.com/rodrigosousa94/dev-redux/blob/main/public/2.png)
 
 
 <!-- ---------------------------------------------------------------------- -->
